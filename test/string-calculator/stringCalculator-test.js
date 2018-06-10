@@ -20,12 +20,24 @@ describe('StringCalculator', () => {
     add('2 4 6 8 1').should.equal(21);
   });
 
-  it('Returns the sum of given numbers even if they are separated with new line', () => {
-    add('2\n6 4').should.equal(12);
+  it('Returns the sum of given numbers even if they are separated by new line or comma', () => {
+    add('2\n6 4,2').should.equal(14);
   })
 
   it('Throws an error if the string contains negative numbers', () => {
     should.throw(() => add('2 -1'))
+  })
+
+  it('Throws an error containing the invalid numbers in message when string contains negative numbers', () => {
+    should.throw(() => add('2 -1 -3'), Error, 'Invalid numbers -1 -3');
+  })
+
+  it('Ignores numbers greater than 1000', () => {
+    add('10,20,1001').should.equal(30);
+  })
+
+  it('Do handle the threshold value',() => {
+    add('10 1000').should.equal(1010);
   })
 
 });
