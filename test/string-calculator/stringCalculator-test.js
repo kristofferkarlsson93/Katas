@@ -36,7 +36,7 @@ describe('StringCalculator', () => {
     add('10,20,1001').should.equal(30);
   })
 
-  it('Do handle the threshold value',() => {
+  it('Do handles the threshold value',() => {
     add('10 1000').should.equal(1010);
   })
 

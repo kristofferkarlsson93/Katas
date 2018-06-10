@@ -1,15 +1,12 @@
 // http://osherove.com/tdd-kata-1/
 
 module.exports = function add (string) {
-  if (string.length <= 0) {
-    return 0;
-  }
   guardAgainstInvalidNumbers(string)
   const numbers = stringToArray(string);
   let result = 0;
   numbers.forEach(number => {
     const parsedNumber = parseInt(number);    
-    if (number <= 1000) {
+    if (number <= 1000 && !isNaN(parsedNumber)) {
       result += parsedNumber
     }
   });
