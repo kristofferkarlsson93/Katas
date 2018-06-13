@@ -19,4 +19,15 @@ describe('greet', () => {
   it('Returns the greeting in all capitals if name is in capital', () => {
     greet('PER').should.equal('HELLO, PER!')
   })
+  it('Greets two persons if an array of two names is given', () => {
+    greet(['Lisa', 'Kristoffer']).should.equal('Hello, Lisa and Kristoffer');
+  })
+  it('Greets all names in an array', () => {
+    greet(['Lisa', 'Kristoffer', 'Anna-Karin', 'Kalle', 'Sven'])
+      .should.equal('Hello, Lisa, Kristoffer, Anna-Karin, Kalle, and Sven')
+  })
+  it('Separates shoutíngs and normal greetings', () => {
+    greet(['Kristoffer', 'Sigvard', 'RUSKPRICK'])
+      .should.equal('Hello, Kristoffer and Sigvard. AND HELLO RUSKPRICK');
+  })
 })
