@@ -1,23 +1,42 @@
 // https://github.com/testdouble/contributing-tests/wiki/Greeting-Kata
 
 module.exports = function greet(referer) {
+  if (!referer) {
+    return 'Hello, my friend.';
+  }
   let greeting = 'Hello, ';
-  if (Array.isArray(referer)) {
-    referer = createNameStringFromArray(referer);
+  let greetingToShouter = ' AND HELLO, '
+  if (!Array.isArray(referer)) {
+    referer = referer.split(', ');
   }
-  referer = referer ? referer : 'my friend';
-  let message = greeting + referer;
-  if (referer === referer.toUpperCase()) {
-    message = shoutGreeting(message);
-  }
-  return message;
+  const normal = [];
+  const shouters = [];
+  referer.forEach(name => {
+    name === name.toUpperCase() ? shouters.push(name) : normal.push(name)
+  });
+  const normalNameString = createNameStringFromArray(normal);
+  const shoutingNameString = createNameStringFromArray(shouters);
+  const normalGreeting = normalNameString ? greeting + normalNameString + '.' : '';
+  let shoutedGreeting = ''
+  if (normalGreeting) {
+    shoutedGreeting = shoutingNameString.length ? greetingToShouter + shoutingNameString + '!' : '';
+  } else shoutedGreeting = shoutingNameString.length ? 'HELLO, ' + shoutingNameString + '!' : '';
+
+  return normalGreeting + shoutedGreeting ;
 }
 
-function createNameStringFromArray (array) {
-  const lastName = array.length -1;
-  return array.length === 2 
-    ? array.join(' and ')
-    : array.map((name, index) => index === lastName ? 'and ' + name : name).join(', ');
+function createNameStringFromArray(array) {
+  if (array.length === 1) {
+    return array[0];
+  }
+  const lastName = array.length - 1;
+  if (array.length === 2) {
+    return array.join(' and ');
+  } else {
+    return array.map((name, index) => {
+        return index === lastName ? 'and ' + name : name;
+    }).join(', ');
+  }
 }
 
 /*function createNameStringFromArray(array, currentName, nameString) {
