@@ -9,9 +9,15 @@ module.exports = function greet(referer) {
   if (!Array.isArray(referer)) {
     referer = referer.split(', ');
   }
+  let allNames = [];
+  referer.forEach(name => {
+    if (name.indexOf(', ') > -1) {
+      allNames = allNames.concat(name.split(', '));
+    } else allNames.push(name);
+  });
   const normal = [];
   const shouters = [];
-  referer.forEach(name => {
+  allNames.forEach(name => {
     name === name.toUpperCase() ? shouters.push(name) : normal.push(name)
   });
   const normalNameString = createNameStringFromArray(normal);
@@ -22,7 +28,7 @@ module.exports = function greet(referer) {
     shoutedGreeting = shoutingNameString.length ? greetingToShouter + shoutingNameString + '!' : '';
   } else shoutedGreeting = shoutingNameString.length ? 'HELLO, ' + shoutingNameString + '!' : '';
 
-  return normalGreeting + shoutedGreeting ;
+  return normalGreeting + shoutedGreeting;
 }
 
 function createNameStringFromArray(array) {
@@ -34,22 +40,10 @@ function createNameStringFromArray(array) {
     return array.join(' and ');
   } else {
     return array.map((name, index) => {
-        return index === lastName ? 'and ' + name : name;
+      return index === lastName ? 'and ' + name : name;
     }).join(', ');
   }
 }
-
-/*function createNameStringFromArray(array, currentName, nameString) {
-  if (array.length > 1) {
-    nameString += ', ' + currentName;
-    array.shift();
-    return createNameStringFromArray(array, array[0], nameString);
-  } else {
-    nameString +=' and ' + currentName;
-    nameString = nameString.replace(', ', '');
-    return nameString;
-  };
-}*/
 
 function shoutGreeting(message) {
   return message.toUpperCase() + '!';

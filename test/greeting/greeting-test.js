@@ -30,4 +30,7 @@ describe('greet', () => {
     greet(['Kristoffer', 'Sigvard', 'RUSKPRICK'])
       .should.equal('Hello, Kristoffer and Sigvard. AND HELLO, RUSKPRICK!');
   })
+  it('Seperates internal strings in array, if the items contains a comma', () => {
+    greet(['Kristoffer','Lisa', 'Benny, Bengt']).should.equal('Hello, Kristoffer, Lisa, Benny, and Bengt.');
+  });
 })
