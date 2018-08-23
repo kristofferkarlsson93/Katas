@@ -49,4 +49,9 @@ describe('PotterBookPriceCalculator', () => {
       .calculate(books)
       .should.equal(bookPrice * 5 * 0.75);
   });
+
+  it('should not be any discount if two of the same book is bought', () => {
+    const books = ['first book', 'first book'];
+    potterBookPriceCalculator.calculate(books).should.equal(bookPrice * 2);
+  });
 });
