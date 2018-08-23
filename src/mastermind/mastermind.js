@@ -1,12 +1,13 @@
+const allowedColors = ['yellow', 'green', 'red', 'blue'];
+
 module.exports.evaluate = guess => {
   guardAgainstInvalidInput(guess);
   const guessResult = this.board.reduce(
     (result, currentValue, index) => {
-      if (valuesMatch(currentValue, guess[index])) {
-        result.correct++;
-      } else {
-        result.wrong++;
-      }
+      guardAgainstInvalidColor(guess[index]);
+      valuesMatch(currentValue, guess[index])
+        ? result.correct++
+        : result.wrong++;
       return result;
     },
     { correct: 0, wrong: 0 }
@@ -22,6 +23,12 @@ const valuesMatch = (value1, value2) => value1 === value2;
 const guardAgainstInvalidInput = input => {
   if (!Array.isArray(input)) {
     throw Error('Invalid input');
+  }
+};
+
+const guardAgainstInvalidColor = color => {
+  if (color && !allowedColors.includes(color)) {
+    throw Error('Invalid color ' + color);
   }
 };
 
